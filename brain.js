@@ -8,6 +8,7 @@ var ccc = require('creepControlCenter');
 run = function() {
 	try {
 		strategy.run();
+		//console.log('brain run');
 		for (roomName in Game.rooms) {
 			initializeRoom(roomName);
 			ccc.run(roomName);
@@ -48,18 +49,23 @@ cleanMem = function() {
  * Check whether this is a new room, if it is initialize it.
  */
 initializeRoom = function(roomName) {
-	const roomMem = Game.rooms[roomName].memory;
-	if (roomMem.init == undefined) {
+	const roomMem = Memory.rooms[roomName];
+	//Memory.rooms[roomName].init = undefined;
+	if (roomMem.init == 0) {
 		roomMem.init = 1;
 		roomMem.roomLevel = 0;
 		roomMem.updated = false;
 		roomMem.pop = {'gatherer':0, 'transporter':0, 'builder':0, 'upgrader':0};
 		roomMem.sources = [];
 		roomMem.sourceSlots = 0;
-		for (src in Game.rooms[roomName].find(FIND_SOURCES)) {
-			roomMem.sources.push(src.id);
-			setAvailable(src, roomName);
-			roomMem.sourceSlots += src.memory.available;
+		for (count in Game.rooms[roomName].find(FIND_SOURCES)) {
+		    var source = Game.rooms[roomName].find(FIND_SOURCES)[count];
+			roomMem.sources.push(source.id);
+			//setAvailable(src, roomName);
+			//roomMem.sourceSlots += src.memory.available;
+			let avail = setAvailable(source, roomName);
+			//console.log(avail);
+			roomMem.sourceSlots += avail;
 		}
 	}
 };
@@ -68,18 +74,22 @@ initializeRoom = function(roomName) {
  * Find the amount of squares adjacent to the source whose terrain is not Wall.
  */
 setAvailable = function(src, roomName) {
-	src.memory.available = 0;
+	var available = 0;
 	let checkX = src.pos.x - 1;
-	let checkY = src.pos.y - 1;
 	while (checkX <= src.pos.x + 1) {
-		while (checkY <= src.pos.y +1) {
-			if (!Game.map.getTerrainAt(checkX, checkY, roomName) == 'wall') {
-				src.memory.available += 1;
+	    let checkY = src.pos.y - 1;
+		while (checkY <= src.pos.y + 1) {
+		    //console.log('check wall' + checkY + ', ' + checkX);
+			if (Game.map.getTerrainAt(checkX, checkY, roomName) != 'wall') {
+				available++;
+				//console.log('no wall');
 			}
-			checkY += 1;
+			checkY++;
 		}
-		checkX += 1;
+		checkX++;
 	}
+	//console.log('available:' + available);
+	return available;
 };
 
 /*

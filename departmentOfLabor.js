@@ -1,4 +1,4 @@
-var cfg = require('.config.js');
+var cfg = require('config');
 
 /*
  * Controls the worker minions during peace and war time.
@@ -12,19 +12,19 @@ runWar = function() { run(); };
  * Run the peace time work tasks and functions
  */
 run = function() {
-	var construct = sort.construct();
-	var sources = sort.sources();
-	var toRepair = sort.toRepair();
-	var dropSpot = sort.getDrop();
-	var container = sort.container();
+	//var construct = sort.construct();
+	//var sources = sort.sources();
+	//var toRepair = sort.toRepair();
+	//var dropSpot = sort.getDrop();
+	//var container = sort.container();
 
-	for (creep in Game.creeps) {
+	/*for (creep in Game.creeps) {
 		if (needEnergy(creep)) {
 			getEnergy(creep, container, sources);
 		} else {
 			runJob(creep, construct, toRepair, dropSpot);
 		}
-	}
+	}*/
 };
 
 /*
@@ -48,7 +48,7 @@ getEnergy = function(creep, container, sources) {
 	} else {
 		jobWithdrawy(creep, container);
 	}
-}
+};
 
 /*
  * Run each indvidual minions job
@@ -86,11 +86,11 @@ jobUpgrade = function(creep) {
  */
 jobBuild = function(creep, construct, toRepair) {
 	if (construct) {
-		if (creep.build(construct[0] == ERR_NOT_IN_RANGE) {
+		if (creep.build(construct[0] == ERR_NOT_IN_RANGE)) {
 			creep.moveTo(construct[0], {visualizePathStyle : {stroke: cfg.getColorWorker()}});
 		}
 	} else {
-		if (creep.repair(toRepair[0] == ERR_NOT_IN_RANGE) {
+		if (creep.repair(toRepair[0] == ERR_NOT_IN_RANGE)) {
 			creep.moveTo(toRepair[0], {visualizePathStyle : {stroke: cfg.getColorWorker()}});
 		}
 	}
@@ -113,3 +113,5 @@ jobWithdraw = function(creep, container) {
 		creep.moveTo(container, {visualizePathStyle : {stroke: cfg.getColorWorker()}});
 	}
 };
+
+module.exports = { runPeace, runWar };

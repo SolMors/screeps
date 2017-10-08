@@ -18,9 +18,9 @@ run = function() {
  */
 checkHostile = function() {
 	for (roomName in Game.rooms) {
-		if (Game.rooms[roomName].find(FIND_HOSTILE_CREEPS);) {
+		if (Game.rooms[roomName].find(FIND_HOSTILE_CREEPS).legnth > 0) {
 			Memory.peace = false;
-			Memory.lastHostileContact = Game.time();
+			Memory.lastHostileContact = Game.time;
 		}
 	}
 };
@@ -29,13 +29,15 @@ checkHostile = function() {
  * Check whether enough time has elapsed to declare peace.
  */
 checkPeace = function() {
+    //console.log('checking peace');
 	for (roomName in Game.rooms) {
-		if (Game.rooms[roomName].find(FIND_HOSTILE_CREEPS);) {
-			const Game.Memory.lastHostileContact = Game.time();
+	    //console.log('peace for');
+		if (Game.rooms[roomName].find(FIND_HOSTILE_CREEPS).length > 0) {
+			Memory.lastHostileContact = Game.time;
 		}
 	}
-	if (Game.time() - Game.Memory.lastHostileContact > 50) {
-		const Game.Memory.peace = true;
+	if (Game.time - Memory.lastHostileContact > 50) {
+		Memory.peace = true;
 	}
 };
 

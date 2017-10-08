@@ -1,7 +1,7 @@
 var dOl = require('departmentOfLabor');
 var dOh = require('departmentOfHealth');
 var dOd = require('departmentOfDefense');
-var dOc = require('departmentofCommerce');
+var dOc = require('departmentOfCommerce');
 
 /*
  * Responsible for all creep production and management.
@@ -9,12 +9,12 @@ var dOc = require('departmentofCommerce');
 
 run = function(roomName) {
 	if (Memory.peace) {
-		dOl.runPeace(roomName);
+		//dOl.runPeace(roomName);
 		dOh.runPeace(roomName);
 		dOd.runPeace(roomName);
 	} else {
-		dOl.runWar(roomName);
-		dOh.runWar(roomName);
+		//dOl.runWar(roomName);
+		//dOh.runWar(roomName);
 		dOd.runWar(roomName);
 	}
 	//dOc.run();

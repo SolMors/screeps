@@ -1,16 +1,20 @@
-var cfg = require('.config');
+var cfg = require('config');
 
 /* 
  * Department of Health tracks the current minion population and spawns the appropriate amount of creeps.
  */
 
-runPeace = function(roomName) { run(roomName); };
-runWar = function(roomName) { run(roomName); };
-
-run = function(roomName) {
+runPeace = function(roomName) {
 	var currRoom = Game.rooms[roomName];
 	checkPopulation(currRoom);
 	spawnCreep(currRoom);
+};
+
+runWar = function(roomName) {
+    var currRoom = Game.rooms[roomName];
+	checkPopulation(currRoom);
+	spawnCreep(currRoom); 
+   
 };
 
 checkPopulation = function(currRoom) {
